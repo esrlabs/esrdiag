@@ -1,0 +1,106 @@
+<!doctype html>
+<title>E.S.R.Diag</title>
+<meta charset="utf-8"/>
+
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="bootstrap.css">
+<script src="jquery-1.8.3.js"></script>
+<script src="bootstrap.js"></script>
+
+<div class="container-fluid">
+
+<div class="row-fluid">
+  <div class="col-md-12">
+    <div class="page-header">
+      <a href="http://esrlabs.com" title="esrlabs.com" class="esr-link pull-right"></a>
+      <h2>E.S.R. Diag</h2>
+    </div>
+    <div class="navbar navbar-default">
+      <form class="navbar-form navbar-left">
+        <span style="position: relative; top: 1px; color: #777;">HW Interface:</span>
+        <select id="hw-interface" class="form-control" style="width: 150px;">
+          <option value="ethernet">Ethernet</option>
+          <option value="can">Can</option>
+        </select>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" onClick="return show_help();">Help!</a></li>
+      </ul>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="col-md-6">
+    <form>
+      <div class="form-group">
+        <label>Source Address:</label>
+        <select class="form-control"> 
+          <option>F0 TAS</option>
+          <option>F1 Tester D-CAN</option>
+          <option>F4 Tester Ethernet</option>
+          <option>FB Tester FA-CAN</option>
+          <option>FD Tester Body-CAN</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <form>
+      <div class="form-group">
+        <label>Target Address:</label>
+        <select class="form-control"> 
+          <option>10 ZGW</option>
+          <option>32 CSM</option>
+          <option>40 BDC</option>
+        </select>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="col-md-6">
+    </form>
+      <div class="form-group">
+        <label>Service:</label>
+        <select class="form-control"> 
+          <option>22 ReadData</option>
+          <option>2E WriteData</option>
+          <option>3101 StartRoutine</option>
+          <option>3102 StopRoutine</option>
+          <option>3103 RequestResults</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-6">
+    </form>
+      <div class="form-group">
+        <label>DID/RID:</label>
+        <input type="text" class="form-control"/>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="col-md-12">
+    <form>
+      <div class="form-group">
+        <label>Data:</label>
+        <input type="text" class="form-control"/>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="col-md-12">
+    <form>
+      <div class="form-group">
+        <label>Request:</label>
+        <input type="text" class="form-control" value="01 23 20 32"/>
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>

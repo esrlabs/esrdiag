@@ -1,0 +1,9 @@
+.esr-link {
+  margin-top: -30px;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  background-image: url("esr_logo.png");
+  background-size: 80px;
+}
+
