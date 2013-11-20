@@ -4,6 +4,7 @@ request = Struct.new(:path, :body)
 response = Struct.new(:content_type, :body)
 
 output = []
+channels = []
 
 app = proc do |env|
   req = request.new(env["PATH_INFO"], env["rack.input"].read)
@@ -16,6 +17,21 @@ app = proc do |env|
   when "/favicon.ico"
   when "/open"
     res.body = ""
+  when "/channels"
+    res.body = JSON({ :channels => [
+      { :name => "Ethernet", :id => "eth" },
+      { :name => "Vector Ch1", :id => "vch1"},
+      { :name => "Vector Ch2", :id => "vch2"}
+    ]})
+    res.content_type = "text/json"
+  when "/connect"
+    cid = JSON(req.body)["channel"]
+    puts "connecting to #{cid}"
+    channels << cid
+  when "/is_connected"
+    cid = JSON(req.body)["channel"]
+    res.body = JSON({ :is_connected => channels.include?(cid) })
+    res.content_type = "text/json"
   when "/request"
     output.push(req.body)
     res.body = ""

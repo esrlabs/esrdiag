@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="bootstrap.css">
 <script src="jquery-1.8.3.js"></script>
 <script src="bootstrap.js"></script>
+<script src="main.js"></script>
 
 <div class="container-fluid">
 
@@ -17,20 +18,11 @@
     </div>
     <div class="navbar navbar-default">
       <form class="navbar-form navbar-left">
-        <span style="position: relative; top: 1px; color: #777;">HW Interface:</span>
-        <select id="hw-interface" class="form-control" style="width: 150px;">
-          <option value="ethernet">Ethernet</option>
-          <option value="vector_can">Vector Can</option>
-          <option value="peak_can">Peak Can</option>
+        <span style="position: relative; top: 1px; color: #777;">HW Channel:</span>
+        <select id="channel_input" class="form-control" style="width: 250px;">
         </select>
         &nbsp;
-        <span style="position: relative; top: 1px; color: #777;">Channel:</span>
-        <select id="hw-channel" class="form-control" style="width: 100px;">
-          <option value="0">0</option>
-          <option value="1">1</option>
-        </select>
-        &nbsp;
-        <button id="open-close-button" class="btn btn-success" onClick="open_close_device();">Open</button>
+        <button id="open_close_button" class="btn btn-default">Connect</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" onClick="return show_help();">Help!</a></li>
@@ -109,6 +101,8 @@
 
 <script>
 
+var open = false;
+
 function update_request() {
   var request;
   request = $('#service_input').val();
@@ -128,27 +122,7 @@ function send_request() {
   });
 }
 
-var open = false;
-function open_close_device() {
-  var intf = $('#hw-interface').val();
-  var channel = $('#hw-channel').val();
-  var but = $('#open-close-button');
-  $.ajax({ 
-    url: "/open",
-    type: "POST",
-    data: JSON.stringify({ interface: intf, channel: channel})
-  });
-}
-
-window.setInterval(function() {
-  $.ajax({ 
-    url: "/output",
-    dataType: "json"
-  }).done(function(json) {
-    var output = $('#response_output');
-    output.val(output.val() + json.response);
-  });
-}, 1000);
+var connector = createConnector($('#channel_input'), $('#open_close_button'));
 
 </script>
 
