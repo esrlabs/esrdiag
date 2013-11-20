@@ -10,3 +10,7 @@
 #response_output {
   height: 200px;
 }
+
+.input_error {
+  background-color: #faa !important;
+}

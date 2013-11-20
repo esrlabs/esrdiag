@@ -59,28 +59,18 @@
   <div class="col-md-6">
     <div class="form-group">
       <label>Service:</label>
-      <select id="service_input" class="form-control" onChange="update_request();"> 
-        <option value="22">22 ReadData</option>
-        <option value="2E">2E WriteData</option>
-        <option value="31 01">3101 StartRoutine</option>
-        <option value="31 02">3102 StopRoutine</option>
-        <option value="31 03">3103 RequestResults</option>
-      </select>
+      <input id="service_input" type="text" class="form-control" value="22">
     </div>
   </div>
   <div class="col-md-6">
     <div class="form-group">
       <label>DID/RID:</label>
-      <input id="did_rid_input" type="text" class="form-control" onChange="update_request();">
+      <input id="did_rid_input" type="text" class="form-control" value="f101">
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
-    <div class="form-group">
-      <label>Data:</label>
-      <input id="data_input" type="text" class="form-control" onChange="update_request();">
-    </div>
     <label>Request:</label>
     <div class="input-group form-group">
       <input id="request_input" type="text" class="form-control" value="01 23 20 32">
@@ -135,6 +125,7 @@ function receive_handler(msg) {
 }
 
 var connector = createConnector($('#channel_input'), $('#open_close_button'), receive_handler);
+createFormChecker($('#service_input'), $('#did_rid_input'), $('#request_input'));
 
 </script>
 
