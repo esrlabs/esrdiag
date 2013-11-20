@@ -156,6 +156,7 @@ function update_service() {
   var service;
   service = $('#service_input_select').val();
   $('#service_input').val(service);
+  $('#service_input').trigger("change");
 }
 function update_service_select() {
   var service_select;
@@ -167,6 +168,7 @@ function update_did_rid() {
   var did_rid;
   did_rid = $('#did_rid_input_select').val();
   $('#did_rid_input').val(did_rid);
+  $('#did_rid_input').trigger("change");
 }
 function update_did_rid_select() {
   var did_rid_select;

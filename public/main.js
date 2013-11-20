@@ -70,17 +70,17 @@ function createFormChecker(service_input, did_rid_input, request_input) {
     request_input.val(bytesToString(bytes));
   }
 
-  service_input.on("change, keyup", function(e) {
+  service_input.on("change keyup", function(e) {
     if (check_input(service_input) !== false) {
       update_request();
     }
   });
-  did_rid_input.on("change, keyup", function(e) {
+  did_rid_input.on("change keyup", function(e) {
     if (check_input(did_rid_input) !== false) {
       update_request();
     }
   });
-  request_input.on("change, keyup", function(e) {
+  request_input.on("change keyup", function(e) {
     check_input(request_input);
   });
 
