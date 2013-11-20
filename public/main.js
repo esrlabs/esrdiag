@@ -6,8 +6,11 @@ function createFormChecker(service_input, did_rid_input, request_input) {
     var failed = false;
     var byteStrs = [];
     var bytes = [];
-
-    var parts = string.split(/[ \t]*[,;.][ \t]*|[ \t]+/);
+    var parts;
+    
+    string = string.replace(/^[ \t]+/,"");
+    string = string.replace(/[ \t]+$/,"");
+    parts = string.split(/[ \t]*[,;.][ \t]*|[ \t]+/);
 
     $.each(parts, function(i, p) {
       p = p.replace(/^0[xX]/, "");
@@ -42,7 +45,7 @@ function createFormChecker(service_input, did_rid_input, request_input) {
   function bytesToString(bytes) {
     var str = "";
     $.each(bytes, function(i, b) {
-      var s = b.toString(16);
+      var s = b.toString(16).toUpperCase();
       if (s.length === 1) {
         s = "0"+s;
       }
