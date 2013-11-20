@@ -3,7 +3,7 @@ require 'json'
 request = Struct.new(:path, :body)
 response = Struct.new(:content_type, :body)
 
-output = []
+requests = []
 channels = []
 
 app = proc do |env|
@@ -18,11 +18,11 @@ app = proc do |env|
   when "/open"
     res.body = ""
   when "/channels"
-    res.body = JSON({ :channels => [
+    res.body = JSON([
       { :name => "Ethernet", :id => "eth" },
       { :name => "Vector Ch1", :id => "vch1"},
       { :name => "Vector Ch2", :id => "vch2"}
-    ]})
+    ])
     res.content_type = "text/json"
   when "/connect"
     cid = JSON(req.body)["channel"]
@@ -32,16 +32,22 @@ app = proc do |env|
     cid = JSON(req.body)["channel"]
     puts "disconnecting from #{cid}"
     channels.delete(cid)
-  when "/is_connected"
+  when "/state"
     cid = JSON(req.body)["channel"]
-    res.body = JSON({ :is_connected => channels.include?(cid) })
+    reqdesc = requests.shift
+    res.body = JSON({ 
+      :connected => channels.include?(cid),
+      :output => reqdesc && [
+        {:request => reqdesc},
+        {:response => { 
+          :source => reqdesc["target"], :target => reqdesc["source"],
+          :response => "12 34 56 78" } }
+      ]
+    })
     res.content_type = "text/json"
   when "/request"
-    output.push(req.body)
+    requests.push(JSON(req.body))
     res.body = ""
-  when "/output"
-    res.body = JSON({ :response => output.shift })
-    res.content_type = "text/json"
   else
     path = "public/"+req.path
   end
