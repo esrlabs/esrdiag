@@ -47,7 +47,7 @@ function createFormChecker(service_input, did_rid_input, request_input) {
         s = "0"+s;
       }
       if (i > 0) {
-        str += ",";
+        str += " ";
       }
       str += s;
     });

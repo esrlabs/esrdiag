@@ -14,68 +14,106 @@
   <div class="col-md-12">
     <div class="page-header">
       <a href="http://esrlabs.com" title="esrlabs.com" class="esr-link pull-right"></a>
-      <h2>E.S.R. Diag</h2>
+      <h2>E.S.R.Diag</h2>
     </div>
     <div class="navbar navbar-default">
       <form class="navbar-form navbar-left">
         <span style="position: relative; top: 1px; color: #777;">Channel:</span>
         <select id="channel_input" class="form-control" style="width: 250px;">
         </select>
-        &nbsp;
         <button id="open_close_button" class="btn btn-default">Connect</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" onClick="return show_help();">Help</a></li>
+        <li><a href="#" onClick="return show_help();">Help!</a></li>
       </ul>
       </p>
     </div>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-3">
     <div class="form-group">
       <label>Source Address:</label>
-      <select id="source_input" class="form-control"> 
-        <option value="F0">F0 TAS</option>
-        <option value="F1">F1 Tester D-CAN</option>
-        <option value="F4">F4 Tester Ethernet</option>
-        <option value="FB">FB Tester FA-CAN</option>
-        <option value="FD">FD Tester Body-CAN</option>
+      <select id="source_input_select" class="form-control" onChange="update_source();"> 
+        <option value="">custom</option>
+        <option value="F0">TAS</option>
+        <option value="F1" selected>Tester D-CAN</option>
+        <option value="F4">Tester Ethernet</option>
+        <option value="FB">Tester FA-CAN</option>
+        <option value="FD">Tester Body-CAN</option>
       </select>
     </div>
+    <div class="form-group">
+      <input id="source_input" type="text" value="F1" class="form-control"  onChange="update_source_select();">
+	</div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-3">
     <div class="form-group">
       <label>Target Address:</label>
-      <select id="target_input" class="form-control"> 
-        <option value="10">10 ZGW</option>
-        <option value="32">32 CSM</option>
-        <option value="40">40 BDC</option>
+      <select id="target_input_select" class="form-control" onChange="update_target();"> 
+        <option value="">custom</option>
+        <option value="10" selected>ZGW</option>
+        <option value="32">CSM</option>
+        <option value="40">BDC</option>
       </select>
     </div>
+    <div class="form-group">
+      <input id="target_input" type="text" value="10" class="form-control"  onChange="update_target_select();">
+	</div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
+  <div class="col-md-3">
     <div class="form-group">
       <label>Service:</label>
-      <input id="service_input" type="text" class="form-control" value="22">
+      <select id="service_input_select" class="form-control" onChange="update_service();"> 
+        <option value="">custom</option>
+        <option value="10">Diagnostic Session Control</option>
+        <option value="11">Ecu Reset</option>
+        <option value="14">Clear Diagnostic Information</option>
+        <option value="19">Read DTC Information</option>
+        <option value="22" selected>Read Data By Identifier</option>
+        <option value="23">Read Memory By Address</option>
+        <option value="27">Security Access</option>
+        <option value="28">Communication Control</option>
+        <option value="2E">Write Data By Identifier</option>
+        <option value="2F">Input Output Control By Identifier</option>
+        <option value="31 01">Routine Control Start</option>
+        <option value="31 02">Routine Control Stop</option>
+        <option value="31 03">Routine Control Request Results</option>
+        <option value="3D">Write Memory By Address</option>
+        <option value="3E">Tester Present</option>
+        <option value="85">Control DTC Setting</option>
+        <option value="86">Response On Event</option>
+      </select>
     </div>
+    <div class="form-group">
+      <input id="service_input" type="text" value="22" class="form-control" onChange="update_service_select();">
+	</div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-3">
     <div class="form-group">
       <label>DID/RID:</label>
-      <input id="did_rid_input" type="text" class="form-control" value="f101">
+      <select id="did_rid_input_select" class="form-control" onChange="update_did_rid();"> 
+        <option value="">custom</option>
+        <option value="F1 01" selected>SVK aktuell</option>
+        <option value="F1 86">Active Diagnostic Session</option>
+        <option value="F1 8A">System Supplier Identifier</option>
+        <option value="F1 8B">ECU Manufacturing Date</option>
+        <option value="F1 8C">ECU Serial Number</option>
+        <option value="F1 90">VIN</option>
+      </select>
     </div>
+    <div class="form-group">
+      <input id="did_rid_input" type="text" value="F1 01" class="form-control" onChange="update_did_rid_select();">
+	</div>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
     <label>Request:</label>
     <div class="input-group form-group">
-      <input id="request_input" type="text" class="form-control" value="01 23 20 32">
+      <input id="request_input" type="text" class="form-control" value="22 F1 01">
       <div class="input-group-btn">
-        <button type="submit" class="btn btn-default" onClick="send_request();">Send</button>
+        <button type="submit" class="btn btn-primary" onClick="send_request();">Send</button>
         <!-- Button and dropdown menu -->
       </div>
     </div>
@@ -92,12 +130,48 @@
 
 var open = false;
 
-function update_request() {
-  var request;
-  request = $('#service_input').val();
-  request += " " + $('#did_rid_input').val();
-  request += " " + $('#data_input').val();
-  $('#request_input').val(request);
+function update_source() {
+  var source;
+  source = $('#source_input_select').val();
+  $('#source_input').val(source);
+}
+function update_source_select() {
+  var source_select;
+  source_select = $('#source_input').val();
+  $('#source_input_select').val(source_select);
+}
+
+function update_target() {
+  var target;
+  target = $('#target_input_select').val();
+  $('#target_input').val(target);
+}
+function update_target_select() {
+  var target_select;
+  target_select = $('#target_input').val();
+  $('#target_input_select').val(target_select);
+}
+
+function update_service() {
+  var service;
+  service = $('#service_input_select').val();
+  $('#service_input').val(service);
+}
+function update_service_select() {
+  var service_select;
+  service_select = $('#service_input').val();
+  $('#service_input_select').val(service_select);
+}
+
+function update_did_rid() {
+  var did_rid;
+  did_rid = $('#did_rid_input_select').val();
+  $('#did_rid_input').val(did_rid);
+}
+function update_did_rid_select() {
+  var did_rid_select;
+  did_rid_select = $('#did_rid_input').val();
+  $('#did_rid_input_select').val(did_rid_select);
 }
 
 function send_request() {
@@ -125,6 +199,7 @@ function receive_handler(msg) {
 }
 
 var connector = createConnector($('#channel_input'), $('#open_close_button'), receive_handler);
+
 createFormChecker($('#service_input'), $('#did_rid_input'), $('#request_input'));
 
 </script>
