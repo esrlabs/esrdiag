@@ -5,7 +5,7 @@ function createConnector(channel_dropdown, connect_button) {
 
   function init_channel_input() {
     $.ajax({ 
-      url: "http://192.168.0.63:8899/channels",
+      url: "/channels",
       dataType: "json"
     }).done(function(json) {
       $.each(json.channels, function(i, c) {
@@ -35,10 +35,10 @@ function createConnector(channel_dropdown, connect_button) {
         type: "POST",
         data: JSON.stringify({ channel: channel_dropdown.val() })
       });
-      state = "connecting";
+      state = "disconnecting";
       connect_button.removeClass();
       connect_button.addClass("btn btn-warning");
-      connect_button.text("Connecting...");
+      connect_button.text("Disconnecting...");
     }
     e.preventDefault();
   }
@@ -61,6 +61,11 @@ function createConnector(channel_dropdown, connect_button) {
         channel_dropdown.prop("disabled", true);
       }
       else {
+        state = "disconnected";
+        connect_button.removeClass();
+        connect_button.addClass("btn btn-default");
+        connect_button.text("Connect");
+        channel_dropdown.prop("disabled", false);
       }
     });
   }, 1000);

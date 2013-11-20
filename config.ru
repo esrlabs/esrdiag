@@ -28,6 +28,10 @@ app = proc do |env|
     cid = JSON(req.body)["channel"]
     puts "connecting to #{cid}"
     channels << cid
+  when "/disconnect"
+    cid = JSON(req.body)["channel"]
+    puts "disconnecting from #{cid}"
+    channels.delete(cid)
   when "/is_connected"
     cid = JSON(req.body)["channel"]
     res.body = JSON({ :is_connected => channels.include?(cid) })
