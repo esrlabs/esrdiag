@@ -1,10 +1,14 @@
+$:.unshift(File.dirname(__FILE__))
 require 'json'
+require 'can_driver'
 
 request = Struct.new(:path, :body)
 response = Struct.new(:content_type, :body)
 
 requests = []
 channels = []
+
+CanDriver.init
 
 app = proc do |env|
   req = request.new(env["PATH_INFO"], env["rack.input"].read)
@@ -34,19 +38,28 @@ app = proc do |env|
     channels.delete(cid)
   when "/state"
     cid = JSON(req.body)["channel"]
+    outpacks = []
     reqdesc = requests.shift
+    if reqdesc
+      outpacks << {:request => reqdesc}
+    end
+    while (resbytes = CanDriver.receive).size > 0
+      outpacks << {:response => {
+        :source => (reqdesc && reqdesc["target"]) || "?", 
+        :target => (reqdesc && reqdesc["source"]) || "?",
+        :response => resbytes.collect{|b| b.to_s(16)}.join(" ")
+      }}
+    end
     res.body = JSON({ 
       :connected => channels.include?(cid),
-      :output => reqdesc && [
-        {:request => reqdesc},
-        {:response => { 
-          :source => reqdesc["target"], :target => reqdesc["source"],
-          :response => "12 34 56 78" } }
-      ]
+      :output => outpacks
     })
     res.content_type = "text/json"
   when "/request"
-    requests.push(JSON(req.body))
+    reqdesc = JSON(req.body)
+    bytes = reqdesc["request"].split(" ").collect{|b| b.to_i(16)}
+    CanDriver.send(reqdesc["target"].to_i(16), bytes)
+    requests.push(reqdesc)
     res.body = ""
   else
     path = "public/"+req.path

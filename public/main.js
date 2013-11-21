@@ -1,6 +1,6 @@
 "use strict";
 
-function createFormChecker(service_input, did_rid_input, request_input) {
+function createFormChecker(service_input, did_rid_input, request_input, source_input, target_input) {
 
   function parseBytes(string) {
     var failed = false;
@@ -8,6 +8,10 @@ function createFormChecker(service_input, did_rid_input, request_input) {
     var bytes = [];
     var parts;
     
+    if (string.match(/^[ \t]*$/)) {
+      return [];
+    }
+
     string = string.replace(/^[ \t]+/,"");
     string = string.replace(/[ \t]+$/,"");
     parts = string.split(/[ \t]*[,;.][ \t]*|[ \t]+/);
@@ -57,13 +61,71 @@ function createFormChecker(service_input, did_rid_input, request_input) {
     return str;
   }
 
-  function check_input(input) {
-    if (parseBytes(input.val()) === false) {
-      input.addClass("input_error");
+  function check_input_request() {
+    if (parseBytes(request_input.val()) === false) {
+      request_input.addClass("input_error");
       return false;
     }
     else {
-      input.removeClass("input_error");
+      request_input.removeClass("input_error");
+      return true;
+    }
+  }
+
+  function check_input_source() {
+    var bytes = parseBytes(source_input.val());
+    if ((bytes === false) || (bytes.length !== 1)) {
+      source_input.addClass("input_error");
+      return false;
+    }
+    else {
+      source_input.removeClass("input_error");
+      return true;
+    }
+  }
+
+  function check_input_target() {
+    var bytes = parseBytes(target_input.val());
+    if ((bytes === false) || (bytes.length !== 1)) {
+      target_input.addClass("input_error");
+      return false;
+    }
+    else {
+      target_input.removeClass("input_error");
+      return true;
+    }
+  }
+
+  function check_input_service() {
+    var bytes = parseBytes(service_input.val());
+    if ((bytes === false) || (bytes.length === 0) || (bytes.length > 2)) {
+      service_input.addClass("input_error");
+      return false;
+    }
+    else if ((bytes.length === 1) && (bytes[0] === 0x31) || (bytes.length === 2) && (bytes[0] !== 0x31)) {
+      service_input.addClass("input_error");
+      return false;
+    }
+    else  {
+      service_input.removeClass("input_error");
+      return true;
+    }
+  }
+
+  function check_input_did_rid() {
+    var bytes = parseBytes(did_rid_input.val());
+    var bytesService = parseBytes(service_input.val());
+    if ((bytes.length === 1) || (bytes.length > 2)) {
+      did_rid_input.addClass("input_error");
+      return false;
+    }
+    else if (((bytes.length === 0) && ((bytesService[0] === 0x22) || (bytesService[0] === 0x2E) || (bytesService[0] === 0x2F) || (bytesService[0] === 0x31))) ||
+             ((bytes.length === 2) && ((bytesService[0] !== 0x22) && (bytesService[0] !== 0x2E) && (bytesService[0] !== 0x2F) && (bytesService[0] !== 0x31)))) {
+      did_rid_input.addClass("input_error");
+      return false;
+    }
+    else  {
+      did_rid_input.removeClass("input_error");
       return true;
     }
   }
@@ -74,22 +136,32 @@ function createFormChecker(service_input, did_rid_input, request_input) {
   }
 
   service_input.on("change keyup", function(e) {
-    if (check_input(service_input) !== false) {
+    if (check_input_service() !== false) {
       update_request();
     }
   });
   did_rid_input.on("change keyup", function(e) {
-    if (check_input(did_rid_input) !== false) {
+    if (check_input_did_rid() !== false) {
       update_request();
     }
   });
   request_input.on("change keyup", function(e) {
-    check_input(request_input);
+    check_input_request();
   });
 
-  check_input(service_input);
-  check_input(did_rid_input);
-  check_input(request_input);
+  source_input.on("change keyup", function(e) {
+    check_input_source();
+  });
+
+  target_input.on("change keyup", function(e) {
+    check_input_target();
+  });
+
+  check_input_service();
+  check_input_did_rid();
+  check_input_source();
+  check_input_target();
+  check_input_request();
 }
 
 function createConnector(channel_dropdown, connect_button, receive_handler) {
