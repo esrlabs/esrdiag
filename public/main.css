@@ -11,6 +11,20 @@
   height: 300px;
 }
 
+#response_table {
+  width: 100%;
+  border: 1px solid #E7E7E7;
+  border-radius: 4px;
+}
+
+#response_table th {
+  color: #777;
+}
+
+.requestrow {
+  background-color: #F8F8F8;
+}
+
 .input_error {
   background-color: #faa !important;
 }

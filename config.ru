@@ -56,7 +56,10 @@ app = proc do |env|
     })
     res.content_type = "text/json"
   when "/request"
-    reqdesc = JSON(req.body)
+    cid = JSON(req.body)["channel"]
+    puts "request from #{cid}"
+    # TODO: use channel id
+    reqdesc = JSON(req.body)["request"]
     bytes = reqdesc["request"].split(" ").collect{|b| b.to_i(16)}
     CanDriver.send(reqdesc["target"].to_i(16), bytes)
     requests.push(reqdesc)

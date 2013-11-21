@@ -119,7 +119,9 @@
     </div>
     <div class="form-group">
       <label>Response:</label>
-      <textarea id="response_output" class="form-control"></textarea>
+      <table id="response_table">
+        <tr><th width="150px">Direction</th><th width="100px">Sender</th><th width="100px">Receiver</th><th>Payload</th></tr>
+      </table>
     </div>
   </div>
 </div>
@@ -183,20 +185,19 @@ function send_request() {
   $.ajax({ 
     url: "/request",
     type: "POST",
-    data: JSON.stringify({ source: source, target: target, request: request })
+    data: JSON.stringify({ channel: $('#channel_input').val(), 
+      request: {source: source, target: target, request: request }})
   });
 }
 
 function receive_handler(msg) {
-  var output = $('#response_output');
+  var output = $('#response_table');
   var text = msg.request;
   if (msg.request) { 
-    output.val(output.val() + "REQUEST: [" + msg.request.source + "] -> [" +
-      msg.request.target + "] "+ msg.request.request + "\n");
+    output.append("<tr class='requestrow'><td class='kindcol'>REQUEST</td><td>"+msg.request.source+"</td><td>"+msg.request.target+"</td><td>"+msg.request.request+"</td></tr>");
   }
   else if (msg.response) { 
-    output.val(output.val() + "RESPONSE: [" + msg.response.source + "] -> [" +
-      msg.response.target + "] "+ msg.response.response + "\n");
+    output.append("<tr><td>RESPONSE</td><td>"+msg.response.source+"</td><td>"+msg.response.target+"</td><td>"+msg.response.response+"</td></tr>");
   }
 }
 
