@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Car Diagnostics of the Future]]></title>
-  <link href="http://esrlabs.github.io/esrdiag/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Diagnostics | Car Diagnostics of the Future]]></title>
+  <link href="http://esrlabs.github.io/esrdiag/blog/categories/diagnostics/atom.xml" rel="self"/>
   <link href="http://esrlabs.github.io/esrdiag/"/>
   <updated>2014-10-08T07:22:06+02:00</updated>
   <id>http://esrlabs.github.io/esrdiag/</id>
