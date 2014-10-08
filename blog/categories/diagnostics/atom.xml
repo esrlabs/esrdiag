@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Diagnostics | Car Diagnostics of the Future]]></title>
   <link href="http://esrlabs.github.io/esrdiag/blog/categories/diagnostics/atom.xml" rel="self"/>
   <link href="http://esrlabs.github.io/esrdiag/"/>
-  <updated>2014-10-08T07:22:06+02:00</updated>
+  <updated>2014-10-08T08:00:07+02:00</updated>
   <id>http://esrlabs.github.io/esrdiag/</id>
   <author>
     <name><![CDATA[Oliver Mueller, Christian Ahrens, Eugen Lau, Martin Thiede and more...]]></name>
@@ -18,7 +18,9 @@
     <link href="http://esrlabs.github.io/esrdiag/blog/2014/10/08/making-it-better/"/>
     <updated>2014-10-08T07:01:41+02:00</updated>
     <id>http://esrlabs.github.io/esrdiag/blog/2014/10/08/making-it-better</id>
-    <content type="html"><![CDATA[<h2>The Situation</h2>
+    <content type="html"><![CDATA[<p><img src="/images/tessel-red-usb.jpg"></p>
+
+<h2>The Situation</h2>
 
 <p>Most of us have the need to get access to the bus systems of the car like CAN or LIN or Ethernet.
 We know about the protocols, about the data layouts and about the problems of those systems. It is
