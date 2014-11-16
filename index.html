@@ -1,25 +1,26 @@
 
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Car Diagnostics of the Future</title>
+  <title>Making It Better - Car Diagnostics of the Future</title>
   <meta name="author" content="Oliver Mueller, Christian Ahrens, Eugen Lau, Martin Thiede and more...">
 
-  
+
   <meta name="description" content="The Situation Most of us have the need to get access to the bus systems of the car like CAN or LIN or Ethernet.
 We know about the protocols, about &hellip;">
-  
+
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  
-  <link rel="canonical" href="http://esrlabs.github.io/esrdiag">
+
+  <link rel="canonical" href="http://esrlabs.github.io/esrdiag/blog/2014/10/08/making-it-better">
   <link href="/esrdiag/favicon.png" rel="icon">
   <link href="/esrdiag/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/esrdiag/atom.xml" rel="alternate" title="Car Diagnostics of the Future" type="application/atom+xml">
@@ -31,31 +32,29 @@ We know about the protocols, about &hellip;">
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
+
 
 </head>
 
-<body   >
+<body>
   <header role="banner"><hgroup>
-  <h1><a href="/esrdiag/">Car Diagnostics of the Future</a></h1>
-  
-    <h2>A gadget everyone needs</h2>
-  
+  <h1><a href="/esrdiag/">nothing here!</a></h1>
+
 </hgroup>
 
 </header>
   <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="/esrdiag/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
+
 </ul>
-  
+
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:esrlabs.github.io/esrdiag" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
+
 <ul class="main-navigation">
   <li><a href="/esrdiag/">Blog</a></li>
   <li><a href="/esrdiag/blog/archives">Archives</a></li>
@@ -64,113 +63,59 @@ We know about the protocols, about &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
+      <div>
+<article class="hentry" role="article">
+
   <header>
-    
-      <h1 class="entry-title"><a href="/esrdiag/blog/2014/10/08/making-it-better/">Making It Better</a></h1>
-    
-    
+
+      <h1 class="entry-title">We have a new home!</h1>
+
+
       <p class="meta">
-        
+
 
 
 
 
 <time class='entry-date' datetime='2014-10-08T07:01:41+02:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:01 am</span></time>
-        
+
       </p>
-    
+
   </header>
 
 
-  <div class="entry-content"><p><img src="/esrdiag/images/tessel-red-usb.jpg"></p>
+<h2>We moved:</h2>
 
-<h2>The Situation</h2>
-
-<p>Most of us have the need to get access to the bus systems of the car like CAN or LIN or Ethernet.
-We know about the protocols, about the data layouts and about the problems of those systems. It is
-immensely important to be able to diagnose those systems:</p>
-
-<ul>
-<li>track messages on different buses</li>
-<li>inject messages ourselves</li>
-<li>build and use higher level protocols</li>
-</ul>
+<p>This project has a new home at <a href="https://github.com/esrlabs/toughmonkey">esrlabs/toughmonkey</a></p>
 
 
-<p>Currently the turn-to solution is mostly based on Vector HW and on a mixture of Vector tools and the
-infamous &ldquo;Diagnoser&rdquo;, a product that was in part developed by ESRLabs employees at BMW CarIT.</p>
+    </p>
 
-<h2>The Problem</h2>
+      <div class="sharing">
 
-<p>To use the existing tools, expensive HW has to be purchased and inferior software has to be used.
-And support is only available on Windows systems. But we often need functionality that exceeds what
-is available to us. And we need to use those tools not only on Windows platforms, but also on
-Linux/Mac or even mobile phones.</p>
-
-<h2>The Solution</h2>
-
-<p>Some of us already have been playing around with homegrown solutions to the problem:</p>
-
-<ul>
-<li>Ethernet based tools (easier to deal with &lsquo;cause they are platform independent)</li>
-<li>Javascript/Java/Ruby/Lua interfaces to existing Vector CAN HW</li>
-</ul>
-
-
-<p>Recently another approach came up that got our attention: building our own hardware!</p>
-
-<p>The idea is to build our own hardware with all the capabilities we need (CAN, LIN and Ethernet to
-start out with). And of course also write the software for this device. We already have a lot of the
-software stacks that we need (CAN, CAN TP, LIN, LIN TP, Ethernet driver, Diagnostic Framework).
-Making those stacks accessible and running our software on the device itself will get rid of the
-need to install drivers for different OS.</p>
-
-<p>The user-interface will be based on the browser which is available on every platform. Of course we
-want a way to easily extend our functionality. Therefore we want to make use of some kind of
-scripting language that can easily be deployed to the target.</p>
-
-<h2>The Project</h2>
-
-<p>We want to start out</p>
-
-<ul>
-<li>building our hardware</li>
-<li>setting up a basic system based on basic software components available to us</li>
-<li>build a web-based UI in form of a rich client (see <a href="https://angularjs.org/">AngularJS</a>)</li>
-<li>chose and embed a suitable scripting language (lua, ruby, javascript&hellip;)</li>
-<li>build and setup a developer environment for a potential community (webpage, tutorials, examples,
-testcode, teaser-videos ) similar to <a href="https://tessel.io/">tessel.io</a></li>
-</ul>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/esrdiag/blog/archives">Blog Archives</a>
-    
-  </div>
+    <p class="meta">
+
+
+    </p>
+  </footer>
+</article>
+
 </div>
+
 <aside class="sidebar">
-  
+
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
+
       <li class="post">
         <a href="/esrdiag/blog/2014/10/08/making-it-better/">Making It Better</a>
       </li>
-    
+
   </ul>
 </section>
 
@@ -178,24 +123,12 @@ testcode, teaser-videos ) similar to <a href="https://tessel.io/">tessel.io</a><
 
 
 
-  
+
 </aside>
+
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Oliver Mueller, Christian Ahrens, Eugen Lau, Martin Thiede and more&#8230; -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-
-
-
-
-
 
   <script type="text/javascript">
     (function(){
@@ -207,9 +140,6 @@ testcode, teaser-videos ) similar to <a href="https://tessel.io/">tessel.io</a><
     })();
   </script>
 
-
-
-
-
 </body>
 </html>
+/html>
